@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+import hashlib
+import matplotlib
+
 class Finance_Tracker_App(tk.Tk):
     """
     This is a desktop program that allows multiple people to
