@@ -19,6 +19,7 @@ class Finance_Tracker_App(tk.Tk):
         for name, P in self.pages.items():
             self.pages[name] = P(self)
             self.pages[name].grid(row = 0, column = 0, sticky = 'nsew')
+        #make pages resizable with the main window
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(0,weight = 1)
 
@@ -37,6 +38,7 @@ class Home_Page(tk.Frame):
         l1.grid(row = 0, column = 2, sticky = 'n')
         go_main_page.grid(row = 3, column = 1, sticky = 's')
         go_plot_page.grid(row = 3, column = 3, sticky = 's')
+        #make buttons resizable with the page(frame)
         self.grid_rowconfigure(3, weight = 1)
         self.grid_columnconfigure(1, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
@@ -52,6 +54,7 @@ class Main_Page(tk.Frame):
         l1.grid(row = 0, column = 2, sticky = 'n')
         go_home_page.grid(row = 3, column = 1, sticky = 's')
         go_plot_page.grid(row = 3, column = 3, sticky = 's')
+        #make buttons resizable with the page(frame)
         self.grid_rowconfigure(3, weight = 1)
         self.grid_columnconfigure(1, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
@@ -66,6 +69,7 @@ class Plot_Page(tk.Frame):
         l1.grid(row = 0, column = 2, sticky = 'n')
         go_main_page.grid(row = 3, column = 1, sticky = 's')
         go_home_page.grid(row = 3, column = 3, sticky = 's')
+        #make buttons resizable with the page(frame)
         self.grid_rowconfigure(3, weight = 1)
         self.grid_columnconfigure(1, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
