@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 class Finance_Tracker_App(tk.Tk):
+    """
+    This is a desktop program that allows multiple people to
+        (1)record their daily expenses/revenues 
+        (2)provides them with visualization tools
+    """
     def __init__(self):
         super().__init__()
         self.title("FinanceTracker")
@@ -11,6 +16,8 @@ class Finance_Tracker_App(tk.Tk):
         for name, P in self.pages.items():
             self.pages[name] = P(self)
             self.pages[name].grid(row = 0, column = 0, sticky = 'nsew')
+        self.grid_rowconfigure(0, weight = 1)
+        self.grid_columnconfigure(0,weight = 1)
 
         self.show_page("Home_Page")
 
@@ -27,6 +34,9 @@ class Home_Page(tk.Frame):
         l1.grid(row = 0, column = 2, sticky = 'n')
         go_main_page.grid(row = 3, column = 1, sticky = 's')
         go_plot_page.grid(row = 3, column = 3, sticky = 's')
+        self.grid_rowconfigure(3, weight = 1)
+        self.grid_columnconfigure(1, weight = 1)
+        self.grid_columnconfigure(3, weight = 1)
 
 
 class Main_Page(tk.Frame):
@@ -39,6 +49,9 @@ class Main_Page(tk.Frame):
         l1.grid(row = 0, column = 2, sticky = 'n')
         go_home_page.grid(row = 3, column = 1, sticky = 's')
         go_plot_page.grid(row = 3, column = 3, sticky = 's')
+        self.grid_rowconfigure(3, weight = 1)
+        self.grid_columnconfigure(1, weight = 1)
+        self.grid_columnconfigure(3, weight = 1)
 
 class Plot_Page(tk.Frame):
     def __init__(self, container):
@@ -50,6 +63,9 @@ class Plot_Page(tk.Frame):
         l1.grid(row = 0, column = 2, sticky = 'n')
         go_main_page.grid(row = 3, column = 1, sticky = 's')
         go_home_page.grid(row = 3, column = 3, sticky = 's')
+        self.grid_rowconfigure(3, weight = 1)
+        self.grid_columnconfigure(1, weight = 1)
+        self.grid_columnconfigure(3, weight = 1)
 
 
 
