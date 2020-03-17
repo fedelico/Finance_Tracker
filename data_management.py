@@ -2,7 +2,7 @@ import sqlite3
 import datetime
 
 class Data_base(object):
-    def __init__(self, name):
+    def __init__(self):
         """ initialize a database """
         self.record_name = name
         self.connection = sqlite3.connect(f"{self.record_name}.db")
