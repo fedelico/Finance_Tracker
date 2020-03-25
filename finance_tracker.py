@@ -38,10 +38,10 @@ class Login_Page(tk.Frame):
         super().__init__(container)
         name, password = tk.StringVar(), tk.StringVar()
         l1 = ttk.Label(self, text= "This is Login_Page")
-        user_name = ttk.Label(self, text = "USER NAME", padx = 10, pady = 10, font = ("bold", 14))
+        user_name = ttk.Label(self, text = "USER NAME", font = ("bold", 14))
         name_entry = ttk.Entry(self, textvariable = name, show = '*')
        
-        pass_word = ttk.Label(self, text = "PASS WORD", padx = 10, pady = 10, font = ("bold", 14))
+        pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
         pswd_entry = ttk.Entry(self, textvariable = password, show = '*')
         
         send = ttk.Button(self, text = "login", command = container.db.check_login(name, password))
