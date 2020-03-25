@@ -8,15 +8,15 @@ class Data_base(object):
         self.record_name = name
         self.connection = sqlite3.connect(f"{self.record_name}.db")
         self.cursor = self.connection.cursor()
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS balance_sheet (id integer PRIMARY KEY NOT NULL AUTOINCREMENT
-                                                                         user_name text
-                                                                         expense integer
-                                                                         revenue integer
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS balance_sheet (id integer PRIMARY KEY NOT NULL AUTOINCREMENT,
+                                                                         user_name text,
+                                                                         expense integer,
+                                                                         revenue integer,
                                                                          time text
                                                                         )""")
-        sef.cursor.execute("""CREATE TABLE IF NOT EXISTS users (uid integer NOT NULL AUTOINCREMENT
-                                                  user_name text
-                                                  pass_word_hash text
+        sef.cursor.execute("""CREATE TABLE IF NOT EXISTS users (uid integer NOT NULL AUTOINCREMENT,
+                                                  user_name text,
+                                                  pass_word_hash text,
                                                   balance integer)""")
         self.connection.commit()
 
