@@ -47,14 +47,17 @@ class Login_Page(tk.Frame):
         pswd_entry = ttk.Entry(self, textvariable = password, show = '*')
         
         send = ttk.Button(self, text = "login", command = container.db.check_login(container, name, password))
+
         l1.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         user_name.grid(row = 1, column = 2, sticky = 'w')
         name_entry.grid(row = 1, column = 3, sticky = 'e')
         pass_word.grid(row = 2, column = 2, sticky = 'w')
         pswd_entry.grid(row = 2, column = 3, sticky = 'e')
+        send.grid(row = 3, column = 3, sticky = 'e')
         #make buttons resizable with the page(frame)
         self.grid_rowconfigure(1, weight = 1)
         self.grid_rowconfigure(2, weight = 1)
+        self.grid_rowconfigure(3, weight = 1)
         self.grid_columnconfigure(2, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
         
