@@ -29,7 +29,7 @@ class Finance_Tracker_App(tk.Tk):
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(0,weight = 1)
 
-        self.show_page("Home_Page")
+        self.show_page("Login_Page")
         
 
     def show_page(self, page):
@@ -41,12 +41,12 @@ class Login_Page(tk.Frame):
         name, password = tk.StringVar(), tk.StringVar()
         l1 = ttk.Label(self, text= "This is Login_Page")
         user_name = ttk.Label(self, text = "USER NAME", font = ("bold", 14))
-        name_entry = ttk.Entry(self, textvariable = name, show = '*')
+        name_entry = ttk.Entry(self, textvariable = name)
        
         pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
         pswd_entry = ttk.Entry(self, textvariable = password, show = '*')
         
-        send = ttk.Button(self, text = "login", command = container.db.check_login(container, name, password))
+        send = ttk.Button(self, text = "login", command = lambda: container.db.check_login(container, name, password))
 
         l1.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         user_name.grid(row = 1, column = 2, sticky = 'w')
