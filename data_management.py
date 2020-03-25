@@ -9,12 +9,12 @@ class Data_base(object):
         self.connection = sqlite3.connect(f"{self.record_name}.db")
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS balance_sheet (id integer PRIMARY KEY AUTOINCREMENT,
-                                                                         user_name text,
+                                                                         user_name text NOT NULL,
                                                                          expense integer,
                                                                          revenue integer,
-                                                                         time text
+                                                                         time text NOT NULL
                                                                         )""")
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS users (uid integer AUTOINCREMENT,
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS users (uid integer PRIMARY KEY AUTOINCREMENT,
                                                   user_name text,
                                                   pass_word_hash text,
                                                   balance integer)""")
@@ -51,7 +51,7 @@ class Data_base(object):
             ok_button.pack()
             pop_win.mainloop()
 
-        real_pswd = self.cursor.execute("SELECT pass_word FROM users WHERE user_name = ?", (name,))
+        real_pswd = self.cursor.execute("SELECT pass_word_hash FROM users WHERE user_name = ?", (name,))
         if real_pswd == password:
             container.current_user = name
             return True
