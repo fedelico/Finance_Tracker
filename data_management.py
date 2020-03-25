@@ -42,7 +42,7 @@ class Data_base(object):
         self.cursor.execute("DELETE FROM balance_sheet WHERE id = ?", (value,))
         self.connection.commit()
 
-    def check_login(self, name, password, func):
+    def check_login(self, controller, name, password):
         def pop_up_msg(error_msg):
             pop_win = tk.Tk()
             label = tk.Label(pop_win, text = error_msg)
@@ -53,7 +53,7 @@ class Data_base(object):
 
         real_pswd = self.cursor.execute("SELECT pass_word FROM users WHERE user_name = ?", (name,))
         if real_pswd == password:
-            func()
+            container.current_user = name
             return True
         else:
             pop_up_msg("wrong user name or password".upper())
