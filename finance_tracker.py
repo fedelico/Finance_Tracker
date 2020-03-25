@@ -25,6 +25,7 @@ class Finance_Tracker_App(tk.Tk):
         self.grid_columnconfigure(0,weight = 1)
 
         self.show_page("Home_age")
+        
         self.db = Data_base("test.db")
 
     def show_page(self, page):
