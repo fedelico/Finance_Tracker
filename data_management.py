@@ -3,7 +3,7 @@ import datetime
 import tkinter as tk
 
 class Data_base(object):
-    def __init__(self):
+    def __init__(self, name):
         """ initialize a database """
         self.record_name = name
         self.connection = sqlite3.connect(f"{self.record_name}.db")
