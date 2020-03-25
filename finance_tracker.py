@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import hashlib
 import matplotlib
-import data_management.py
+from data_management import Data_base
+
 
 class Finance_Tracker_App(tk.Tk):
     """
@@ -35,17 +36,26 @@ class Finance_Tracker_App(tk.Tk):
 class Login_Page(tk.Frame):
     def __init__(self, container):
         super().__init__(container)
+        name, password = tk.StringVar(), tk.StringVar()
         l1 = ttk.Label(self, text= "This is Login_Page")
-        go_main_page = ttk.Button(self, text = "To Main_Page", command = lambda: container.show_page("Main_Page"))
-        go_plot_page = ttk.Button(self, text = "To Plot_Page", command = lambda: container.show_page("Plot_Page"))
+        user_name = ttk.Label(self, text = "USER NAME", padx = 10, pady = 10, font = ("bold", 14))
+        name_entry = ttk.Entry(self, textvariable = name, show = '*')
+       
+        pass_word = ttk.Label(self, text = "PASS WORD", padx = 10, pady = 10, font = ("bold", 14))
+        pswd_entry = ttk.Entry(self, textvariable = password, show = '*')
         
-        l1.grid(row = 0, column = 2, sticky = 'n')
-        go_main_page.grid(row = 3, column = 1, sticky = 's')
-        go_plot_page.grid(row = 3, column = 3, sticky = 's')
+        send = ttk.Button(self, text = "login", command = container.db.check_login(name, password))
+        l1.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
+        user_name.grid(row = 1, column = 2, sticky = 'w')
+        name_entry.grid(row = 1, column = 3, sticky = 'e')
+        pass_word.grid(row = 2, column = 2, sticky = 'w')
+        pswd_entry.grid(row = 2, column = 3, sticky = 'e')
         #make buttons resizable with the page(frame)
-        self.grid_rowconfigure(3, weight = 1)
-        self.grid_columnconfigure(1, weight = 1)
+        self.grid_rowconfigure(1, weight = 1)
+        self.grid_rowconfigure(2, weight = 1)
+        self.grid_columnconfigure(2, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
+        
 
 
 class Main_Page(tk.Frame):
