@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+import tkinter as tk
 
 class Data_base(object):
     def __init__(self):
@@ -40,6 +41,23 @@ class Data_base(object):
     def delete_data(self, value):
         self.cursor.execute("DELETE FROM balance_sheet WHERE id = ?", (value,))
         self.connection.commit()
+
+    def check_login(self, name, password, func):
+        def pop_up_msg(error_msg):
+            pop_win = tk.Tk()
+            label = tk.Label(pop_win, text = error_msg)
+            label.pack(fill = "both", expand = True,side = "top", pady = 10)
+            ok_button = tk.Button(pop_win, text = "OK", command = lambda: pop_win.destroy())
+            ok_button.pack()
+            pop_win.mainloop()
+
+        real_pswd = self.cursor.execute("SELECT pass_word FROM users WHERE user_name = ?", (name,))
+        if real_pswd == password:
+            func()
+            return True
+        else:
+            pop_up_msg("wrong user name or password".upper())
+            return False
 
     def get_data(self, table_name, criteria):
         pass
