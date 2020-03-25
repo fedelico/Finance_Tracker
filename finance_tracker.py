@@ -16,6 +16,10 @@ class Finance_Tracker_App(tk.Tk):
         self.title("FinanceTracker")
         self.geometry("700x350")
 
+        #initialize data_base
+        self.db = Data_base("test.db")
+        self.current_user = ""
+
         # initializes pages
         self.pages = {'Login_Page':Login_Page, 'Main_Page':Main_Page, 'Plot_Page':Plot_Page}
         for name, P in self.pages.items():
@@ -27,8 +31,6 @@ class Finance_Tracker_App(tk.Tk):
 
         self.show_page("Home_Page")
         
-        #initialize data_base
-        self.db = Data_base("test.db")
 
     def show_page(self, page):
         self.pages[page].tkraise()
@@ -44,7 +46,7 @@ class Login_Page(tk.Frame):
         pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
         pswd_entry = ttk.Entry(self, textvariable = password, show = '*')
         
-        send = ttk.Button(self, text = "login", command = container.db.check_login(name, password))
+        send = ttk.Button(self, text = "login", command = container.db.check_login(container, name, password))
         l1.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         user_name.grid(row = 1, column = 2, sticky = 'w')
         name_entry.grid(row = 1, column = 3, sticky = 'e')
