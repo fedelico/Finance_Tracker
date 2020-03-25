@@ -16,7 +16,7 @@ class Finance_Tracker_App(tk.Tk):
         self.geometry("700x350")
 
         # initializes pages
-        self.pages = {'Home_Page':Home_Page, 'Main_Page':Main_Page, 'Plot_Page':Plot_Page}
+        self.pages = {'Login_Page':Login_Page, 'Main_Page':Main_Page, 'Plot_Page':Plot_Page}
         for name, P in self.pages.items():
             self.pages[name] = P(self)
             self.pages[name].grid(row = 0, column = 0, sticky = 'nsew')
@@ -24,17 +24,18 @@ class Finance_Tracker_App(tk.Tk):
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(0,weight = 1)
 
-        self.show_page("Home_age")
+        self.show_page("Home_Page")
         
+        #initialize data_base
         self.db = Data_base("test.db")
 
     def show_page(self, page):
         self.pages[page].tkraise()
 
-class Home_Page(tk.Frame):
+class Login_Page(tk.Frame):
     def __init__(self, container):
         super().__init__(container)
-        l1 = ttk.Label(self, text= "This is Home_Page")
+        l1 = ttk.Label(self, text= "This is Login_Page")
         go_main_page = ttk.Button(self, text = "To Main_Page", command = lambda: container.show_page("Main_Page"))
         go_plot_page = ttk.Button(self, text = "To Plot_Page", command = lambda: container.show_page("Plot_Page"))
         
