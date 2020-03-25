@@ -14,7 +14,7 @@ class Data_base(object):
                                                                          revenue integer
                                                                          time text
                                                                         )""")
-        sef.cursor.execute("""CREATE TABLE IF NOT EXISTS users (uid integer NOT NULL AUTO_INCREMENT
+        sef.cursor.execute("""CREATE TABLE IF NOT EXISTS users (uid integer NOT NULL AUTOINCREMENT
                                                   user_name text
                                                   pass_word_hash text
                                                   balance integer)""")
