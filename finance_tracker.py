@@ -43,10 +43,10 @@ class Login_Page(tk.Frame):
         sign_up = ttk.Label(self, text= "Sign Up", font = ("bold", 15))
         sign_up.bind("<Button-1>", container.show_page("Sign_up_Page")) # left click to register
         user_name = ttk.Label(self, text = "USER NAME", font = ("bold", 14))
-        name_entry = ttk.Entry(self, textvariable = name)
+        name_entry = Labeled_Entry(self, default_text = "Enter your user name here", textvariable = name)
        
         pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
-        pswd_entry = ttk.Entry(self, textvariable = password, show = '*')
+        pswd_entry = Labeled_Entry(self, default_text = "Enter your password here", textvariable = password, show = '*')
         
         send = ttk.Button(self, text = "login", command = lambda: container.db.check_login(container, name, password))
 
@@ -63,6 +63,22 @@ class Login_Page(tk.Frame):
         self.grid_rowconfigure(3, weight = 1)
         self.grid_columnconfigure(2, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
+
+class Labeled_Entry(ttk.Entry):
+    def __init__(self, container, default_text = "", **kwargs):
+        super.__init__(container, **kwargs)
+        self.default_text = default_text
+        self.bind("<FocusIn>", on_entry)
+        self.bind("<FocusOut>", on_exit)
+        self.on_exit()
+
+    def on_entry(self, event = None):
+        if self.get() == self.default_text:
+            self.delete(0, tk.END)
+
+    def on_exit(self, event = None):
+        if not self.get():
+            self.insert(0, self.default_text)
         
 
 
