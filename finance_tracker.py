@@ -17,7 +17,7 @@ class Finance_Tracker_App(tk.Tk):
         self.geometry("700x350")
 
         #initialize data_base
-        self.db = Data_base("test.db")
+        self.db = Data_base("test")
         self.current_user = ""
 
         # initializes pages
