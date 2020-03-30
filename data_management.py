@@ -51,7 +51,7 @@ class Data_base(object):
             ok_button.pack()
             pop_win.mainloop()
 
-        real_pswd = self.cursor.execute("SELECT pass_word_hash FROM users WHERE user_name = ?", (name,))
+        real_pswd = self.cursor.execute("SELECT pass_word_hash FROM users WHERE user_name = ?", (str(name),))
         if real_pswd == password:
             container.current_user = name
             return True
