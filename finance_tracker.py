@@ -4,6 +4,12 @@ import hashlib
 import matplotlib
 from data_management import Data_base
 
+def error_msg(msg):
+    warning = tk.Tk()
+    warning_msg = tk.Label(warning, text = msg, font = ("bold", 14))
+    warning_msg.pack()
+    ok_button = tk.Button(warning, text = "OK", font = ("bold", 14), command = lambda: warning.destroy)
+    ok_button.pack()
 
 class Finance_Tracker_App(tk.Tk):
     """
@@ -73,10 +79,18 @@ class Sign_up_Page(tk.Frame):
         self.name_entry.get()
         self.pswd_entry.get()
         self.password_confirm_entry.get()
-        if self.name == '' or self.password == '' or self.password_check == '':
-            pass
+        if self.name == '' :
+            error_msg("please enter your name".upper())
+
+        elif self.password == '':
+            error_msg("please enter your password".upper())
+        
+        elif self.password_check == '':
+            error_msg("please confirm your password".upper())
+
         if self.password != self.password_check:
-            pass
+            error_msg("pass word does not match".upper())
+            
         self.container.db.cursor.execute("SELECT * from users where user_name = ?", (self.name))
         if self.container.db.cursor.fetchone() == None:
             pass
@@ -166,6 +180,6 @@ class Plot_Page(tk.Frame):
 
 
 
-
-app = Finance_Tracker_App()
-app.mainloop()
+if __name__ == "__main__":
+    app = Finance_Tracker_App()
+    app.mainloop()
