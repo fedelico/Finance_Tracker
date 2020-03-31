@@ -127,6 +127,15 @@ class Login_Page(tk.Frame):
         self.grid_columnconfigure(2, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
 
+    def check_login(self, controller, name, password):
+        real_pswd = container.db.get_data("users", "pass_word_hash", (name,))
+        if real_pswd == password:
+            container.current_user = name
+            return True
+        else:
+            error_msg("wrong user name or password".upper())
+            return False
+
 class Labeled_Entry(ttk.Entry):
     def __init__(self, container, default_text = "", **kwargs):
         super.__init__(container, **kwargs)
