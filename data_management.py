@@ -1,6 +1,13 @@
 import sqlite3
 import datetime
 import tkinter as tk
+import hashlib
+
+def encrypt(raw_text):
+    """encrypt user password using sha256 algorithm"""
+    s = hashlib.sha256()
+    s.update(raw_text)
+    return s.hexdigest()
 
 class Data_base(object):
     def __init__(self, name):
@@ -21,8 +28,8 @@ class Data_base(object):
         self.connection.commit()
 
 
-    def update_data(self, column_name, value):
-        self.cursor.execute("UPDATE users SET ? = ?", (column_name, value))
+    def update_data(self, table_name, column_id, value):
+        self.cursor.execute("UPDATE {} SET {} = ? WHERE {} = {}", (column_name, value))
         self.connection.commit()
 
 
@@ -32,7 +39,7 @@ class Data_base(object):
             self.connection.commit()
 
         elif table_name == "users":
-            self.cursor.execute("INSERT INTO users VALUES (?, ?, ?)", (values[0], values[1], 0))
+            self.cursor.execute("INSERT INTO users VALUES (?, ?, ?)", (values[0], encrypt(values[1]), values[2]))
             self.connection.commit()
 
         else:
@@ -44,6 +51,11 @@ class Data_base(object):
 
 
     def get_data(self, table_name, criteria):
-        pass
+        if table_name == "balance_sheet":
+            self.cursor.execute("SELECT * FROM balance_sheet WHERE ")
+        elif table_name == "users":
+            self.cursor.execute("SELECT * FROM users WHERE ")
+        else:
+            raise ValueError("table name does not exist")
     
 
