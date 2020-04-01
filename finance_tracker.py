@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-import hashlib
 import matplotlib
-from data_management import Data_base
+from data_management import Data_base, encrypt
 
 def error_msg(msg):
     warning = tk.Tk()
@@ -134,7 +133,7 @@ class Login_Page(tk.Frame):
 
     def check_login(self, controller, name, password):
         real_pswd = container.db.get_data("users", "pass_word_hash", (name,))
-        if real_pswd == password:
+        if real_pswd == encrypt(password):
             container.current_user = name
             container.show_page("Main_Page")
             return True
