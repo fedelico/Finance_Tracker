@@ -88,14 +88,14 @@ class Sign_up_Page(tk.Frame):
         elif self.password_check == '':
             error_msg("please confirm your password".upper())
 
-        if self.password != self.password_check:
+        elif self.password != self.password_check:
             error_msg("pass word does not match".upper())
             
-        self.container.db.cursor.execute("SELECT * from users where user_name = ?", (self.name))
-        if self.container.db.cursor.fetchone() == None:
-            pass
-        
-        self.container.db.insert_data("users", (self.name, self.password, 0))
+        elif self.container.db.get_data("users", {"user_name":self.name}) == None:
+            error_msg("user name already been used".upper())
+
+        else:
+            self.container.db.insert_data("users", (self.name, self.password, 0))
 
 
 class Login_Page(tk.Frame):
@@ -111,7 +111,7 @@ class Login_Page(tk.Frame):
         pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
         pswd_entry = Labeled_Entry(self, default_text = "Enter your password here", textvariable = password, show = '*')
         
-        send = ttk.Button(self, text = "login", command = lambda: container.db.check_login(container, name, password))
+        send = ttk.Button(self, text = "login", command = lambda: self.check_login(container, name, password))
 
         l1.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         sign_up.grid(row = 0, column = 3)
@@ -131,6 +131,7 @@ class Login_Page(tk.Frame):
         real_pswd = container.db.get_data("users", "pass_word_hash", (name,))
         if real_pswd == password:
             container.current_user = name
+            container.show_page("Main_Page")
             return True
         else:
             error_msg("wrong user name or password".upper())
