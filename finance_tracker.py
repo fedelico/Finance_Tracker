@@ -10,6 +10,7 @@ def error_msg(msg):
     warning_msg.pack()
     ok_button = tk.Button(warning, text = "OK", font = ("bold", 14), command = lambda: warning.destroy)
     ok_button.pack()
+    warning.mainloop()
 
 class Finance_Tracker_App(tk.Tk):
     """
