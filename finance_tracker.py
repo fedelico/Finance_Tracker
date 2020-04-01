@@ -96,6 +96,10 @@ class Sign_up_Page(tk.Frame):
 
         else:
             self.container.db.insert_data("users", (self.name, self.password, 0))
+            self.name_entry.delete(0, tk.END)
+            self.pswd_entry.delete(0, tk.END)
+            self.container.show_page("Login_Page")
+
 
 
 class Login_Page(tk.Frame):
