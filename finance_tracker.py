@@ -5,9 +5,10 @@ from data_management import Data_base, encrypt
 
 def error_msg(msg):
     warning = tk.Tk()
+    warning.title("error".upper())
     warning_msg = tk.Label(warning, text = msg, font = ("bold", 14))
     warning_msg.pack()
-    ok_button = tk.Button(warning, text = "OK", font = ("bold", 14), command = lambda: warning.destroy)
+    ok_button = tk.Button(warning, text = "OK", font = ("bold", 14), command = lambda: warning.destroy())
     ok_button.pack()
     warning.mainloop()
 
@@ -47,17 +48,17 @@ class Sign_up_Page(tk.Frame):
         self.name, self.password, self.password_check = tk.StringVar(), tk.StringVar(), tk.StringVar()
         super().__init__(container)
         l2 = ttk.Label(text = "This is Sign_up_Page")
-        go_login = ttk.Button(text = "Back to login", command = lambda: container.show_page("Login_Page"))
+        go_login = ttk.Button(self, text = "Back to login", command = lambda: container.show_page("Login_Page"))
         user_name = ttk.Label(self, text = "USER NAME", font = ("bold", 14))
-        self.name_entry = Labeled_Entry(self, default_text = "Enter your user name here", textvariable = name)
+        self.name_entry = Labeled_Entry(self, default_text = "Enter your user name here", textvariable = self.name)
        
         pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
-        self.pswd_entry = Labeled_Entry(self, default_text = "Enter your password here", textvariable = password, show = '*')
+        self.pswd_entry = Labeled_Entry(self, default_text = "Enter your password here", textvariable = self.password, show = '*')
         
         pass_word_confirmation = ttk.Label(self, text = "CONFIRM YOUR PASS WORD")
-        self.pass_word_confirm_entry = Labeled_Entry(self, default_text = "Enter your password again", textvariable = password_check, show = '*')
+        self.pass_word_confirm_entry = Labeled_Entry(self, default_text = "Enter your password again", textvariable = self.password_check, show = '*')
         
-        send = ttk.Button(self, text = "login", command = lambda: add_new_user(self))
+        send = ttk.Button(self, text = "login", command = lambda: self.add_new_user())
 
         l2.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         go_login.grid(row = 5, column = 1)
@@ -72,13 +73,15 @@ class Sign_up_Page(tk.Frame):
         self.grid_rowconfigure(1, weight = 1)
         self.grid_rowconfigure(2, weight = 1)
         self.grid_rowconfigure(3, weight = 1)
+        self.grid_rowconfigure(5, weight = 1)
+        self.grid_columnconfigure(1, weight = 1)
         self.grid_columnconfigure(2, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
     
     def add_new_user(self):
         self.name_entry.get()
         self.pswd_entry.get()
-        self.password_confirm_entry.get()
+        self.pass_word_confirm_entry.get()
         if self.name == '' :
             error_msg("please enter your name".upper())
 
@@ -108,14 +111,14 @@ class Login_Page(tk.Frame):
         name, password = tk.StringVar(), tk.StringVar()
         l1 = ttk.Label(self, text= "This is Login_Page")
         sign_up = ttk.Label(self, text= "Sign Up", font = ("bold", 15))
-        sign_up.bind("<Button-1>", container.show_page("Sign_up_Page")) # left click to register
+        sign_up.bind("<Button-1>", lambda event: container.show_page("Sign_up_Page")) # left click to register
         user_name = ttk.Label(self, text = "USER NAME", font = ("bold", 14))
         name_entry = Labeled_Entry(self, default_text = "Enter your user name here", textvariable = name)
        
         pass_word = ttk.Label(self, text = "PASS WORD", font = ("bold", 14))
         pswd_entry = Labeled_Entry(self, default_text = "Enter your password here", textvariable = password, show = '*')
         
-        send = ttk.Button(self, text = "login", command = lambda: self.check_login(container, name, password))
+        send = ttk.Button(self, text = "login", command = lambda: self.check_login(container, name.get(), password.get()))
 
         l1.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         sign_up.grid(row = 0, column = 3)
@@ -131,22 +134,27 @@ class Login_Page(tk.Frame):
         self.grid_columnconfigure(2, weight = 1)
         self.grid_columnconfigure(3, weight = 1)
 
-    def check_login(self, controller, name, password):
-        real_pswd = container.db.get_data("users", "pass_word_hash", (name,))
-        if real_pswd == encrypt(password):
-            container.current_user = name
-            container.show_page("Main_Page")
-            return True
+    def check_login(self, container, name, password):
+        if name == '':
+            error_msg("please enter your name")
+        elif password == '':
+            error_msg("please enter your password")
         else:
-            error_msg("wrong user name or password".upper())
-            return False
+            
+            real_pswd = container.db.get_data("users", name)
+            if real_pswd == encrypt(password):
+                container.current_user = name
+                container.show_page("Main_Page")
+                return True
+            else:
+                error_msg("wrong user name or password".upper())
 
 class Labeled_Entry(ttk.Entry):
     def __init__(self, container, default_text = "", **kwargs):
-        super.__init__(container, **kwargs)
+        ttk.Entry.__init__(self, container, **kwargs)
         self.default_text = default_text
-        self.bind("<FocusIn>", on_entry)
-        self.bind("<FocusOut>", on_exit)
+        self.bind("<FocusIn>", self.on_entry)
+        self.bind("<FocusOut>", self.on_exit)
         self.on_exit()
 
     def on_entry(self, event = None):

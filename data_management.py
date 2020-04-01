@@ -6,7 +6,7 @@ import hashlib
 def encrypt(raw_text):
     """encrypt user password using sha256 algorithm"""
     s = hashlib.sha256()
-    s.update(raw_text)
+    s.update(raw_text.encode('utf8'))
     return s.hexdigest()
 
 class Data_base(object):
@@ -50,11 +50,13 @@ class Data_base(object):
         self.connection.commit()
 
 
-    def get_data(self, table_name, criteria):
+    def get_data(self, table_name, name):
         if table_name == "balance_sheet":
             self.cursor.execute("SELECT * FROM balance_sheet WHERE ")
         elif table_name == "users":
-            self.cursor.execute("SELECT * FROM users WHERE ")
+           self.cursor.execute("SELECT pass_word_hash FROM users WHERE user_name = ?", (name,))
+           self.connection.commit()
+           return self.cursor.fetchone()
         else:
             raise ValueError("table name does not exist")
     
