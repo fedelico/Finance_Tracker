@@ -79,22 +79,19 @@ class Sign_up_Page(tk.Frame):
         self.grid_columnconfigure(3, weight = 1)
     
     def add_new_user(self):
-        self.name_entry.get()
-        self.pswd_entry.get()
-        self.pass_word_confirm_entry.get()
-        if self.name == '' :
+        if self.name.get() == '' :
             error_msg("please enter your name".upper())
 
-        elif self.password == '':
+        elif self.password.get() == '':
             error_msg("please enter your password".upper())
         
-        elif self.password_check == '':
+        elif self.password_check.get() == '':
             error_msg("please confirm your password".upper())
 
-        elif self.password != self.password_check:
+        elif self.password.get() != self.password_check.get():
             error_msg("pass word does not match".upper())
             
-        elif self.container.db.get_data("users", {"user_name":self.name}) == None:
+        elif self.container.db.get_name(self.name.get()) != None:
             error_msg("user name already been used".upper())
 
         else:
