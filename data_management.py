@@ -35,11 +35,11 @@ class Data_base(object):
 
     def insert_data(self, table_name, values):
         if table_name == "balance_sheet":
-            self.cursor.execute("INSERT INTO balance_sheet VALUES (?, ?, ?, ?)", (user_name, values[0], values[1], str(datetime.datetime.today)))# todo: find a way to put user name in it
+            self.cursor.execute("INSERT INTO balance_sheet (user_name, expense, revenue, time) VALUES (?, ?, ?, ?)", (user_name, values[0], values[1], str(datetime.datetime.today)))
             self.connection.commit()
 
         elif table_name == "users":
-            self.cursor.execute("INSERT INTO users VALUES (?, ?, ?)", (values[0], encrypt(values[1]), values[2]))
+            self.cursor.execute("INSERT INTO users (user_name, pass_word_hash, balance) VALUES (?, ?, ?)", (values[0], encrypt(values[1]), values[2]))
             self.connection.commit()
 
         else:
