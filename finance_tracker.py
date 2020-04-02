@@ -98,7 +98,7 @@ class Sign_up_Page(tk.Frame):
             self.container.db.insert_data("users", (self.name.get(), self.password.get(), 0))
             self.name_entry.delete(0, tk.END)
             self.pswd_entry.delete(0, tk.END)
-            self.pswd_confirm_entry.delete(0, tk.END)
+            self.pass_word_confirm_entry.delete(0, tk.END)
             self.container.show_page("Login_Page")
 
 
