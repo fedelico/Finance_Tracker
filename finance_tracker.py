@@ -95,9 +95,10 @@ class Sign_up_Page(tk.Frame):
             error_msg("user name already been used".upper())
 
         else:
-            self.container.db.insert_data("users", (self.name, self.password, 0))
+            self.container.db.insert_data("users", (self.name.get(), self.password.get(), 0))
             self.name_entry.delete(0, tk.END)
             self.pswd_entry.delete(0, tk.END)
+            self.pswd_confirm_entry.delete(0, tk.END)
             self.container.show_page("Login_Page")
 
 
@@ -136,15 +137,12 @@ class Login_Page(tk.Frame):
             error_msg("please enter your name")
         elif password == '':
             error_msg("please enter your password")
+        elif name != container.db.get_name(name) or password != container.db.get_password(name):
+            error_msg("user name or password doesn't match any account") 
         else:
-            
-            real_pswd = container.db.get_pswd(name)
-            if real_pswd == encrypt(password):
-                container.current_user = name
-                container.show_page("Main_Page")
-                return True
-            else:
-                error_msg("wrong user name or password".upper())
+            container.current_user = name
+            container.show_page("Main_Page")
+            return True
 
 class Labeled_Entry(ttk.Entry):
     def __init__(self, container, default_text = "", **kwargs):
