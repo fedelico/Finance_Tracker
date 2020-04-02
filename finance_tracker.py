@@ -137,7 +137,7 @@ class Login_Page(tk.Frame):
             error_msg("please enter your name")
         elif password == '':
             error_msg("please enter your password")
-        elif name != container.db.get_name(name) or password != container.db.get_password(name):
+        elif name != container.db.get_name(name) or password != container.db.get_pswd(name):
             error_msg("user name or password doesn't match any account") 
         else:
             container.current_user = name
