@@ -49,15 +49,22 @@ class Data_base(object):
         self.cursor.execute("DELETE FROM balance_sheet WHERE id = ?", (value,))
         self.connection.commit()
 
+    def get_name(self, name):
+        self.cursor.execute("SELECT user_name FROM users WHERE user_name = ?", (name,))
+        self.connection.commit()
+        result = self.cursor.fetchone()
+        return result[0] if result else None
 
-    def get_data(self, table_name, name):
-        if table_name == "balance_sheet":
-            self.cursor.execute("SELECT * FROM balance_sheet WHERE ")
-        elif table_name == "users":
-           self.cursor.execute("SELECT pass_word_hash FROM users WHERE user_name = ?", (name,))
-           self.connection.commit()
-           return self.cursor.fetchone()
-        else:
-            raise ValueError("table name does not exist")
+    def get_pswd(self, user_name):
+        self.cursor.execute("SELECT pass_word_hash FROM users WHERE user_name = ?", (user_name,))
+        self.connection.commit()
+        return self.cursor.fetchone()[0]
+
+    def get_balance(self, current_user):
+        self.cursor.execute("SELECT balance FROM users WHERE user_name = ?", (current_user,))
+        self.connection.commit()
+        return self.cursor.fetchone()[0]
+
+
     
 
