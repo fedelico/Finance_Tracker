@@ -138,7 +138,7 @@ class Login_Page(tk.Frame):
             error_msg("please enter your password")
         else:
             
-            real_pswd = container.db.get_data("users", name)
+            real_pswd = container.db.get_pswd(name)
             if real_pswd == encrypt(password):
                 container.current_user = name
                 container.show_page("Main_Page")
