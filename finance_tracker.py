@@ -58,7 +58,7 @@ class Sign_up_Page(tk.Frame):
         pass_word_confirmation = ttk.Label(self, text = "CONFIRM YOUR PASS WORD")
         self.pass_word_confirm_entry = Labeled_Entry(self, default_text = "Enter your password again", textvariable = self.password_check, show = '*')
         
-        send = ttk.Button(self, text = "login", command = lambda: self.add_new_user())
+        send = ttk.Button(self, text = "Sign up", command = lambda: self.add_new_user())
 
         l2.grid(row = 0, column = 0, columnspan = 4, sticky = 'we')
         go_login.grid(row = 5, column = 1)
@@ -137,7 +137,7 @@ class Login_Page(tk.Frame):
             error_msg("please enter your name")
         elif password == '':
             error_msg("please enter your password")
-        elif name != container.db.get_name(name) or password != container.db.get_pswd(name):
+        elif name != container.db.get_name(name) or encrypt(password) != container.db.get_pswd(name):
             error_msg("user name or password doesn't match any account") 
         else:
             container.current_user = name
